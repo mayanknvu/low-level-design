@@ -1,4 +1,4 @@
-package com.mayank.elevator_system;
+package com.mayank.elevator_system.core;
 
 import java.util.Set;
 import java.util.TreeSet;

@@ -1,4 +1,4 @@
-package com.mayank.elevator_system;
+package com.mayank.elevator_system.core.enums;
 
 public enum ElevatorDirection {
   UP,

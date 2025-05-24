@@ -1,4 +1,7 @@
-package com.mayank.elevator_system;
+package com.mayank.elevator_system.components;
+
+import com.mayank.elevator_system.components.panel.HallPanel;
+import com.mayank.elevator_system.core.enums.ElevatorDirection;
 
 public class Floor {
   private final int floorNumber;

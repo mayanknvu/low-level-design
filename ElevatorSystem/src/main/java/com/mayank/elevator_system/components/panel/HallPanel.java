@@ -1,4 +1,8 @@
-package com.mayank.elevator_system;
+package com.mayank.elevator_system.components.panel;
+
+import com.mayank.elevator_system.core.ElevatorRequest;
+import com.mayank.elevator_system.core.enums.ElevatorDirection;
+import com.mayank.elevator_system.core.enums.ElevatorRequestMode;
 
 // Hall panel for up/down calls
 public class HallPanel implements RequestPanel {

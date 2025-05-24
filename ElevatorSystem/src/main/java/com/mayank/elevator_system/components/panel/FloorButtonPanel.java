@@ -1,5 +1,7 @@
-package com.mayank.elevator_system;
+package com.mayank.elevator_system.components.panel;
 
+import com.mayank.elevator_system.core.ElevatorRequest;
+import com.mayank.elevator_system.core.enums.ElevatorRequestMode;
 import java.util.*;
 
 public class FloorButtonPanel {
