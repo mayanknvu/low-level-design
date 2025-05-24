@@ -1,4 +1,4 @@
-package com.mayank.elevator_system;
+package com.mayank.elevator_system.components;
 
 public class Door {
   public void open(int id) {

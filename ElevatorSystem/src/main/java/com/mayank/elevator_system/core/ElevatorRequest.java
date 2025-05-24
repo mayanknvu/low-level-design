@@ -1,5 +1,7 @@
-package com.mayank.elevator_system;
+package com.mayank.elevator_system.core;
 
+import com.mayank.elevator_system.core.enums.ElevatorDirection;
+import com.mayank.elevator_system.core.enums.ElevatorRequestMode;
 
 public class ElevatorRequest {
   private final int floor;

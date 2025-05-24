@@ -1,5 +1,10 @@
-package com.mayank.elevator_system;
+package com.mayank.elevator_system.core;
 
+import com.mayank.elevator_system.components.Display;
+import com.mayank.elevator_system.core.enums.ElevatorDirection;
+import lombok.Data;
+
+@Data
 public class ElevatorCar {
   int id;
   int currentFloor;
