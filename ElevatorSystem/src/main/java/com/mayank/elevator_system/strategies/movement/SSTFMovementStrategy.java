@@ -1,6 +1,8 @@
 package com.mayank.elevator_system.strategies.movement;
 
 import com.mayank.elevator_system.core.enums.ElevatorDirection;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class SSTFMovementStrategy implements IElevatorMovementStrategy {
@@ -68,8 +70,38 @@ public class SSTFMovementStrategy implements IElevatorMovementStrategy {
 
   */
   @Override
-  public List<Integer> getNextStops(
-      List<Integer> currentRequests, int currentFloor, ElevatorDirection direction) {
-    return null;
+  public List<Integer> getNextStops(List<Integer> currentRequests, int currentFloor, ElevatorDirection direction) {
+    if (currentRequests.isEmpty()) {
+      return new ArrayList<>();
+    }
+
+    List<Integer> result = new ArrayList<>();
+    List<Integer> remainingRequests = new ArrayList<>(currentRequests);
+    int currentPos = currentFloor;
+
+    // Keep selecting the closest request until all are served
+    while (!remainingRequests.isEmpty()) {
+      int closestFloor = findClosestFloor(remainingRequests, currentPos);
+      result.add(closestFloor);
+      remainingRequests.remove(Integer.valueOf(closestFloor));
+      currentPos = closestFloor;
+    }
+
+    return result;
+  }
+
+  private int findClosestFloor(List<Integer> requests, int currentPosition) {
+    int closest = requests.get(0);
+    int minDistance = Math.abs(currentPosition - closest);
+
+    for (int floor : requests) {
+      int distance = Math.abs(currentPosition - floor);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closest = floor;
+      }
+    }
+
+    return closest;
   }
 }

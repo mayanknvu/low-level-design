@@ -42,7 +42,7 @@ public class ElevatorSystem {
     this.elevatorMovementStrategy = elevatorMovementStrategy;
   }
 
-  public void handleRequests(ElevatorRequest request) {
+  public void handleRequest(ElevatorRequest request) {
     ElevatorController assigned =
         elevatorSelectionStrategy.assignElevator(elevatorControllers, request);
     if (!isNull(assigned)) {
