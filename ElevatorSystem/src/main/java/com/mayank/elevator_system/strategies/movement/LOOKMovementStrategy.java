@@ -1,6 +1,9 @@
 package com.mayank.elevator_system.strategies.movement;
 
 import com.mayank.elevator_system.core.enums.ElevatorDirection;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LOOKMovementStrategy implements IElevatorMovementStrategy {
@@ -59,8 +62,46 @@ public class LOOKMovementStrategy implements IElevatorMovementStrategy {
 
   */
   @Override
-  public List<Integer> getNextStops(
-      List<Integer> currentRequests, int currentFloor, ElevatorDirection direction) {
-    return null;
+  public List<Integer> getNextStops(List<Integer> currentRequests, int currentFloor, ElevatorDirection direction) {
+    if (currentRequests.isEmpty()) {
+      return new ArrayList<>();
+    }
+
+    List<Integer> result = new ArrayList<>();
+    List<Integer> upRequests = new ArrayList<>();
+    List<Integer> downRequests = new ArrayList<>();
+
+    // Separate requests into up and down from current floor
+    for (int floor : currentRequests) {
+      if (floor >= currentFloor) {
+        upRequests.add(floor);
+      } else {
+        downRequests.add(floor);
+      }
+    }
+
+    // Sort requests
+    Collections.sort(upRequests);           // Ascending for upward travel
+    Collections.sort(downRequests);         // Ascending, will reverse for downward
+    Collections.reverse(downRequests);      // Descending for downward travel
+
+    // LOOK difference: Only go in direction if there are requests in that direction
+    if (direction == ElevatorDirection.UP || direction == ElevatorDirection.IDLE) {
+      if (!upRequests.isEmpty()) {
+        result.addAll(upRequests);
+      }
+      if (!downRequests.isEmpty()) {
+        result.addAll(downRequests);
+      }
+    } else if (direction == ElevatorDirection.DOWN) {
+      if (!downRequests.isEmpty()) {
+        result.addAll(downRequests);
+      }
+      if (!upRequests.isEmpty()) {
+        result.addAll(upRequests);
+      }
+    }
+
+    return result;
   }
 }

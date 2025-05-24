@@ -1,6 +1,9 @@
 package com.mayank.elevator_system.strategies.movement;
 
 import com.mayank.elevator_system.core.enums.ElevatorDirection;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SCANMovementStrategy implements IElevatorMovementStrategy {
@@ -57,8 +60,40 @@ public class SCANMovementStrategy implements IElevatorMovementStrategy {
 
   */
   @Override
-  public List<Integer> getNextStops(
-      List<Integer> currentRequests, int currentFloor, ElevatorDirection direction) {
-    return null;
+  public List<Integer> getNextStops(List<Integer> currentRequests, int currentFloor, ElevatorDirection direction) {
+    if (currentRequests.isEmpty()) {
+      return new ArrayList<>();
+    }
+
+    List<Integer> result = new ArrayList<>();
+    List<Integer> upRequests = new ArrayList<>();
+    List<Integer> downRequests = new ArrayList<>();
+
+    // Separate requests into up and down from current floor
+    for (int floor : currentRequests) {
+      if (floor >= currentFloor) {
+        upRequests.add(floor);
+      } else {
+        downRequests.add(floor);
+      }
+    }
+
+    // Sort requests
+    Collections.sort(upRequests);           // Ascending for upward travel
+    Collections.sort(downRequests);         // Ascending, will reverse for downward
+    Collections.reverse(downRequests);      // Descending for downward travel
+
+    // Determine service order based on current direction
+    if (direction == ElevatorDirection.UP || direction == ElevatorDirection.IDLE) {
+      // Serve upward requests first, then downward
+      result.addAll(upRequests);
+      result.addAll(downRequests);
+    } else {
+      // Serve downward requests first, then upward
+      result.addAll(downRequests);
+      result.addAll(upRequests);
+    }
+
+    return result;
   }
 }

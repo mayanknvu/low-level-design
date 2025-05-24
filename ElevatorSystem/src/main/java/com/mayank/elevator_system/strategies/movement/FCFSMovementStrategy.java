@@ -1,6 +1,8 @@
 package com.mayank.elevator_system.strategies.movement;
 
 import com.mayank.elevator_system.core.enums.ElevatorDirection;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class FCFSMovementStrategy implements IElevatorMovementStrategy {
@@ -52,6 +54,6 @@ public class FCFSMovementStrategy implements IElevatorMovementStrategy {
   @Override
   public List<Integer> getNextStops(
       List<Integer> currentRequests, int currentFloor, ElevatorDirection direction) {
-    return null;
+    return new ArrayList<>(currentRequests);
   }
 }
