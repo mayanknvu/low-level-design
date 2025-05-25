@@ -2,37 +2,37 @@ package com.mayank.vending_machine.inventory;
 
 import com.mayank.vending_machine.exceptions.EmptySlotException;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 @AllArgsConstructor
 public class Slot {
-    private final String slotId;
-    private Item item;
+  private final String slotId;
+  private Item item;
 
-    public Item getItem(){
-        if (item == null || item.isOutOfStock()) {
-            throw new EmptySlotException("Slot " + slotId + " is empty.");
-        }
-        return item;
+  public Item getItem() {
+    if (item == null || item.isOutOfStock()) {
+      throw new EmptySlotException("Slot " + slotId + " is empty.");
     }
-    public void dispense(){
-        getItem().decrementQuantity();
-        if(item.isOutOfStock()) item = null;
-    }
+    return item;
+  }
 
-    public void restock(Item newItem) {
-        this.item = newItem;
-    }
+  public void dispense() {
+    getItem().decrementQuantity();
+    if (item.isOutOfStock()) item = null;
+  }
 
-    public String getSlotId() {
-        return slotId;
-    }
+  public void restock(Item newItem) {
+    this.item = newItem;
+  }
 
-    public boolean isEmpty() {
-        return item == null;
-    }
+  public String getSlotId() {
+    return slotId;
+  }
 
-    public Item peek() {
-        return item;
-    }
+  public boolean isEmpty() {
+    return item == null;
+  }
+
+  public Item peek() {
+    return item;
+  }
 }
