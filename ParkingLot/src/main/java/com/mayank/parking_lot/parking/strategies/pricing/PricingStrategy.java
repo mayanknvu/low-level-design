@@ -1,4 +1,4 @@
-package com.mayank.parking_lot.parking.strategies;
+package com.mayank.parking_lot.parking.strategies.pricing;
 
 import com.mayank.parking_lot.parking.ticket.ParkingTicket;
 
