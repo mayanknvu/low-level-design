@@ -1,7 +1,6 @@
 package com.mayank.elevator_system.strategies.movement;
 
 import com.mayank.elevator_system.core.enums.ElevatorDirection;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -62,7 +61,8 @@ public class LOOKMovementStrategy implements IElevatorMovementStrategy {
 
   */
   @Override
-  public List<Integer> getNextStops(List<Integer> currentRequests, int currentFloor, ElevatorDirection direction) {
+  public List<Integer> getNextStops(
+      List<Integer> currentRequests, int currentFloor, ElevatorDirection direction) {
     if (currentRequests.isEmpty()) {
       return new ArrayList<>();
     }
@@ -81,9 +81,9 @@ public class LOOKMovementStrategy implements IElevatorMovementStrategy {
     }
 
     // Sort requests
-    Collections.sort(upRequests);           // Ascending for upward travel
-    Collections.sort(downRequests);         // Ascending, will reverse for downward
-    Collections.reverse(downRequests);      // Descending for downward travel
+    Collections.sort(upRequests); // Ascending for upward travel
+    Collections.sort(downRequests); // Ascending, will reverse for downward
+    Collections.reverse(downRequests); // Descending for downward travel
 
     // LOOK difference: Only go in direction if there are requests in that direction
     if (direction == ElevatorDirection.UP || direction == ElevatorDirection.IDLE) {
