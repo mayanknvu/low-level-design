@@ -12,10 +12,8 @@ public class HourlyPricingStrategy implements PricingStrategy {
       throw new IllegalArgumentException("Vacated time must be set before calculating charges");
     }
 
-    final long hoursParked = Duration.between(
-            parkingTicket.getCreatedAt(),
-            parkingTicket.getVacatedAt()
-    ).toHours();
+    final long hoursParked =
+        Duration.between(parkingTicket.getCreatedAt(), parkingTicket.getVacatedAt()).toHours();
 
     // Charge for minimum 1 hour, then additional hours
     return Math.max(1, hoursParked) * PRICE_PER_HOUR;

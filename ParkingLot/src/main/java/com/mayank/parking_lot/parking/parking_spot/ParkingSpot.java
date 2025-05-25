@@ -2,7 +2,6 @@ package com.mayank.parking_lot.parking.parking_spot;
 
 import com.mayank.parking_lot.parking.parking_spot.enums.ParkingSpotType;
 import com.mayank.parking_lot.vehicle.Vehicle;
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter

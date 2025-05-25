@@ -39,7 +39,7 @@ public class ParkingManager {
   }
 
   public synchronized ParkingSpot getParkingSpot(final Vehicle vehicle)
-          throws ParkingFullException {
+      throws ParkingFullException {
     final ParkingSpotType parkingSpotType = getParkingSpotTypeForVehicle(vehicle.getVehicleType());
 
     if (!canPark(vehicle)) {
@@ -62,13 +62,13 @@ public class ParkingManager {
     return parkingSpot;
   }
 
-  public Optional<ParkingSpot> vacateParkingSpot(final String parkingSpotId) {
+  public void vacateParkingSpot(final String parkingSpotId) {
     final ParkingSpot parkingSpot = usedSpots.get(parkingSpotId);
     if (Objects.nonNull(parkingSpot)) {
       parkingSpot.vacateSpot();
       availableSpots.get(parkingSpot.getType()).addFirst(parkingSpot);
+      spotAssignmentStrategy.vacatedParkingSpot(parkingSpot);
     }
-    return Optional.ofNullable(parkingSpot);
   }
 
   public boolean canPark(final Vehicle vehicle) {
