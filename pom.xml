@@ -18,6 +18,7 @@
         <module>NetworkRequestCache</module>
         <module>ElevatorSystem</module>
         <module>ParkingLot</module>
+        <module>VendingMachine</module>
     </modules>
 
     <properties>
