@@ -1,7 +1,6 @@
 package com.mayank.elevator_system.strategies.movement;
 
 import com.mayank.elevator_system.core.enums.ElevatorDirection;
-
 import java.util.ArrayList;
 import java.util.List;
 

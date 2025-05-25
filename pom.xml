@@ -17,6 +17,7 @@
     <modules>
         <module>NetworkRequestCache</module>
         <module>ElevatorSystem</module>
+        <module>ParkingLot</module>
     </modules>
 
     <properties>
