@@ -9,21 +9,20 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 public class Item {
-    private final String name;
-    private final double price;
-    @Setter
-    private int qty;
+  private final String name;
+  private final double price;
+  @Setter private int qty;
 
-    public boolean isOutOfStock() {
-        return qty <= 0;
-    }
+  public boolean isOutOfStock() {
+    return qty <= 0;
+  }
 
-    @Override
-    public String toString() {
-        return name + " (₹" + price + ") x" + qty;
-    }
+  @Override
+  public String toString() {
+    return name + " (₹" + price + ") x" + qty;
+  }
 
-    public void decrementQuantity() {
-        if (qty > 0) qty--;
-    }
+  public void decrementQuantity() {
+    if (qty > 0) qty--;
+  }
 }
