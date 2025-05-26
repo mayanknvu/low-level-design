@@ -19,6 +19,7 @@
         <module>ElevatorSystem</module>
         <module>ParkingLot</module>
         <module>VendingMachine</module>
+        <module>ATM</module>
     </modules>
 
     <properties>
