@@ -4,6 +4,16 @@ import com.mayank.atm_lld.ATMContext;
 import com.mayank.atm_lld.model.Card;
 import com.mayank.atm_lld.model.TransactionType;
 
+import com.mayank.atm_lld.ATMContext;
+import com.mayank.atm_lld.dispense.*;
+import com.mayank.atm_lld.exception.ATMOutOfCashException;
+import com.mayank.atm_lld.exception.InsufficientFundsException;
+import com.mayank.atm_lld.exception.InvalidAmountException;
+import com.mayank.atm_lld.model.Account;
+import com.mayank.atm_lld.model.Card;
+import java.util.HashMap;
+import java.util.Map;
+
 public class TransactionState implements ATMState {
     private static final TransactionState instance = new TransactionState();
 
@@ -12,21 +22,92 @@ public class TransactionState implements ATMState {
         return instance;
     }
 
+    @Override
     public void insertCard(ATMContext context, Card card) {
         System.out.println("Card already inserted.");
     }
 
+    @Override
     public void enterPin(ATMContext context, String pin) {
         System.out.println("Already authenticated.");
     }
 
-    public void requestTransaction(ATMContext context, TransactionType type) {
+    @Override
+    public void requestTransaction(ATMContext context, String type, int amount) {
+        Card currentCard = context.getATM().getCurrentCard();
+
+        try {
+            switch (type.toUpperCase()) {
+                case "WITHDRAW":
+                    withdrawCash(context, amount, currentCard.getAccount());
+                    break;
+                case "BALANCE":
+                    checkBalance(currentCard.getAccount());
+                    break;
+                default:
+                    System.out.println("Invalid transaction type: " + type);
+                    return;
+            }
+
+            // After successful transaction, eject card
+            System.out.println("Transaction completed. Card ejected.");
+            context.getATM().clearCard();
+            context.setState(IdleState.getInstance());
+
+        } catch (Exception e) {
+            System.out.println("Transaction failed: " + e.getMessage());
+            context.getATM().clearCard();
+            context.setState(IdleState.getInstance());
+        }
     }
 
-    private void checkBalance(){
+    private void withdrawCash(ATMContext context, int amount, Account account)
+            throws InsufficientFundsException, ATMOutOfCashException, InvalidAmountException {
 
+        // Validate amount
+        if (amount <= 0) {
+            throw new InvalidAmountException("Withdrawal amount must be positive");
+        }
+
+        if (amount % 100 != 0) {
+            throw new InvalidAmountException("Amount must be in multiples of 100");
+        }
+
+        // Check ATM cash availability
+        if (!context.getATM().hasSufficientCash(amount)) {
+            throw new ATMOutOfCashException("ATM doesn't have sufficient cash");
+        }
+
+        // Check account balance
+        if (account.getBalance() < amount) {
+            throw new InsufficientFundsException("Insufficient account balance");
+        }
+
+        // Process withdrawal
+        account.withdraw(amount);
+        context.getATM().deductCash(amount);
+
+        // Dispense cash using chain of responsibility
+        context.setState(DispenseState.getInstance());
+        dispenseCash(amount);
+
+        System.out.println("Withdrawal successful!");
     }
 
+    private void checkBalance(Account account) {
+        System.out.println("Account Number: " + account.getAccountNumber());
+        System.out.println("Current Balance: ₹" + account.getBalance());
+    }
+
+    private void dispenseCash(int amount) {
+        DispenseChain dispenseChain = new FiveHundredDispenser();
+        dispenseChain.setNext(new HundredDispenser());
+
+        System.out.println("Dispensing cash...");
+        dispenseChain.dispense(amount);
+    }
+
+    @Override
     public void cancel(ATMContext context) {
         System.out.println("Transaction canceled. Card ejected.");
         context.getATM().clearCard();

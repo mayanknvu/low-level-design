@@ -4,6 +4,9 @@ import com.mayank.atm_lld.ATMContext;
 import com.mayank.atm_lld.model.Card;
 import com.mayank.atm_lld.model.TransactionType;
 
+import com.mayank.atm_lld.ATMContext;
+import com.mayank.atm_lld.model.Card;
+
 public class AuthenticateUserState implements ATMState {
     private static final AuthenticateUserState instance = new AuthenticateUserState();
 
@@ -17,6 +20,7 @@ public class AuthenticateUserState implements ATMState {
         System.out.println("Card already inserted.");
     }
 
+    @Override
     public void enterPin(ATMContext context, String pin) {
         Card card = context.getATM().getCurrentCard();
         if (card.getPin().equals(pin)) {
@@ -29,10 +33,12 @@ public class AuthenticateUserState implements ATMState {
         }
     }
 
-    public void requestTransaction(ATMContext context, TransactionType type) {
+    @Override
+    public void requestTransaction(ATMContext context, String type, int amount) {
         System.out.println("Enter PIN first.");
     }
 
+    @Override
     public void cancel(ATMContext context) {
         System.out.println("Transaction canceled. Card ejected.");
         context.getATM().clearCard();
