@@ -18,9 +18,7 @@ public class ATM {
   private void initializeDenominations() {
     denominations = new HashMap<>();
     // Initialize with some default cash inventory
-    denominations.put(2000, 50); // 50 notes of 2000
     denominations.put(500, 100); // 100 notes of 500
-    denominations.put(200, 100); // 100 notes of 200
     denominations.put(100, 200); // 200 notes of 100
 
     System.out.println("ATM initialized with cash inventory:");
