@@ -9,6 +9,7 @@ import com.mayank.atm_lld.model.Account;
 import com.mayank.atm_lld.model.Card;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class TransactionState implements ATMState {
   private static final TransactionState instance = new TransactionState();
@@ -100,7 +101,7 @@ public class TransactionState implements ATMState {
     Map<Integer, Integer> notesToDispense = new HashMap<>();
 
     // Sort denominations in descending order (2000, 500, 200, 100)
-    int[] denominations = {2000, 500, 200, 100};
+    Set<Integer> denominations = context.getATM().getDenominations().keySet();
 
     int remainingAmount = amount;
 

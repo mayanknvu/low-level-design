@@ -81,7 +81,6 @@ public class Main {
 
     // Demonstrate cash refilling
     System.out.println("\n--- Maintenance: Refilling Cash ---");
-    atm.addCash(2000, 20);
     atm.addCash(500, 50);
     atm.displayCashInventory();
   }
